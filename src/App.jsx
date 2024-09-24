@@ -8,18 +8,14 @@ import Registration from './components/Registration/Registration';
 function App() {
   const [isLogin, setiIsLogin] = useState(true);
 
-  function showRegistration() {
-    setiIsLogin(false);
-  }
-
   return (
     <div className="container">
       {
         isLogin
           ?
-          <Login showRegistration={showRegistration} />
+          <Login showRegistration={() => setiIsLogin(false)} />
           :
-          <Registration showRegistration={showRegistration} />}
+          <Registration showRegistration={() => setiIsLogin(true)} />}
     </div>
   )
 }

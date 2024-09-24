@@ -12,19 +12,15 @@
   margin-bottom: 20px;
 }
 
-.input_field label {
-  display: block;
-  margin-bottom: 5px;
-  color: #333;
-  font-size: 14px;
+.input_field {
+  margin-top: 20px;
 }
 
-.input_field input {
-  width: 100%;
-  padding: 10px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  font-size: 16px;
+.input_field label {
+  font-size: 0.9rem;
+  display: block;
+  margin-bottom: 5px;
+  margin-top: 0;
 }
 
 .input_field input:focus {
@@ -32,8 +28,7 @@
   outline: none;
 }
 
-.input_field label a {
-  color: #6c63ff;
+.input_field label {
   text-decoration: none;
 }
 
@@ -50,9 +45,43 @@
   border-radius: 5px;
   font-size: 16px;
   cursor: pointer;
-  margin-top: 10px;
+  margin-top: 40px;
+}
+
+.register_btn span {
+  color: #7f5af0;
+  text-decoration: none;
+  cursor: pointer;
 }
 
 .register_btn:hover {
   background-color: #5a52d6;
+}
+
+.input_select,
+.input_field input {
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  background-color: rgb(255 255 255 / 25%);
+  width: 130px;
+  margin-right: 10px;
+}
+
+.input_field input {
+  width: 100%;
+  margin-right: 0;
+}
+
+.signup_link {
+  margin-top: 15px;
+  font-size: 0.9rem;
+  text-align: center;
+  font-size: 1rem;
+}
+
+.signup_link span {
+  color: #7f5af0;
+  text-decoration: none;
+  cursor: pointer;
 }

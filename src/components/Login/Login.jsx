@@ -50,7 +50,9 @@ export default function Login({ showRegistration }) {
                 {loginError && <span className='error'>Please enter Login</span>}
 
                 <label htmlFor="password">Password</label>
-                <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="********" />
+                <input type="password" value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    onBlur={validatePassword} placeholder="********" />
                 {passwordError && <span className='error'>Please enter Password</span>}
 
                 <button onClick={loginUser}>Login</button>
