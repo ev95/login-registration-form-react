@@ -1,0 +1,58 @@
+.form_container {
+  padding: 40px;
+  background-color: rgba(255 255 255 / 25%);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 40px;
+  width: 500px;
+  margin-top: 100px;
+}
+
+.inputfield {
+  margin-bottom: 20px;
+}
+
+.input_field label {
+  display: block;
+  margin-bottom: 5px;
+  color: #333;
+  font-size: 14px;
+}
+
+.input_field input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+.input_field input:focus {
+  border-color: #6c63ff;
+  outline: none;
+}
+
+.input_field label a {
+  color: #6c63ff;
+  text-decoration: none;
+}
+
+.input_field label a:hover {
+  text-decoration: underline;
+}
+
+.register_btn {
+  width: 100%;
+  padding: 10px;
+  background-color: #6c63ff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.register_btn:hover {
+  background-color: #5a52d6;
+}
