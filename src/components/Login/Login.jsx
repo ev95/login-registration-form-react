@@ -5,6 +5,7 @@ import { useState } from 'react';
 export default function Login({ showRegistration }) {
     const [login, setLogin] = useState('');
     const [loginError, setLoginError] = useState(false);
+    const [loginMailFormatError, setLoginMailFormatError] = useState(false);
 
     const [password, setPassword] = useState('');
     const [passwordError, setPasswordError] = useState(false);
@@ -23,8 +24,9 @@ export default function Login({ showRegistration }) {
     function validateLogin() {
         if (!login.trim()) {
             setLoginError(true);
+            setLoginMailFormatError(false);
         } else {
-            console.log(validateEmail(login));
+            validateEmail(login) ? setLoginMailFormatError(false) : setLoginMailFormatError(true);
             setLoginError(false);
         }
 
@@ -47,13 +49,14 @@ export default function Login({ showRegistration }) {
                 <input type="text" value={login}
                     onChange={(e) => setLogin(e.target.value)}
                     onBlur={validateLogin} placeholder="username@gmail.com" />
-                {loginError && <span className='error'>Please enter Login</span>}
+                {loginError && !loginMailFormatError && <span className='error'>Please enter login</span>}
+                {loginMailFormatError && <span className='error'>Incorrect email format</span>}
 
                 <label htmlFor="password">Password</label>
                 <input type="password" value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     onBlur={validatePassword} placeholder="********" />
-                {passwordError && <span className='error'>Please enter Password</span>}
+                {passwordError && <span className='error'>Please enter password</span>}
 
                 <button onClick={loginUser}>Login</button>
 

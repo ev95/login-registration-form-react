@@ -1,0 +1,22 @@
+.user_info p span {
+  font-weight: 600;
+}
+
+.profile_container {
+  padding: 40px;
+  background-color: rgba(255 255 255 / 25%);
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 40px;
+  width: 500px;
+  margin-top: 100px;
+  position: relative;
+}
+
+.user_image {
+  border-radius: 50%;
+  width: 100px;
+  position: absolute;
+  top: -55px;
+  left: 40%;
+}
