@@ -1,67 +1,62 @@
 import style from './Login.module.css';
-
-import { useState } from 'react';
+import { Formik, Field, Form } from 'formik';
+import * as  Yup from 'yup';
 
 export default function Login({ showRegistration }) {
-    const [login, setLogin] = useState('');
-    const [loginError, setLoginError] = useState(false);
-    const [loginMailFormatError, setLoginMailFormatError] = useState(false);
 
-    const [password, setPassword] = useState('');
-    const [passwordError, setPasswordError] = useState(false);
-
-    function loginUser(e) {
-        e.preventDefault();
-        validateLogin();
-        validatePassword();
-    }
-
-    function validateEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
-
-    function validateLogin() {
-        if (!login.trim()) {
-            setLoginError(true);
-            setLoginMailFormatError(false);
-        } else {
-            validateEmail(login) ? setLoginMailFormatError(false) : setLoginMailFormatError(true);
-            setLoginError(false);
-        }
-
-    }
-
-    function validatePassword() {
-        if (!password.trim()) {
-            setPasswordError(true);
-        } else {
-            setPasswordError(false);
-        }
-    }
+    const validationSchema = Yup.object().shape({
+        username: Yup.string().min(6, "Username must be at least 6 characters").max(30, 'Username must not exceed 30 characters').required('Please enter username'),
+        password: Yup.string().min(6, "Password must be at least 6 characters")
+            .max(30, 'Password must not exceed 30 characters')
+            .required('Please enter password')
+            .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character(@$!%*?&)'),
+    })
 
     return (
         <div className={style.login_form_container}>
             <h2>Login</h2>
             <p>Welcome back! Please login to your account.</p>
-            <form>
-                <label htmlFor="username">User Name</label>
-                <input type="text" value={login}
-                    onChange={(e) => setLogin(e.target.value)}
-                    onBlur={validateLogin} placeholder="username@gmail.com" />
-                {loginError && !loginMailFormatError && <span className='error'>Please enter login</span>}
-                {loginMailFormatError && <span className='error'>Incorrect email format</span>}
+            <Formik
+                initialValues={{
+                    username: '',
+                    password: ''
 
-                <label htmlFor="password">Password</label>
-                <input type="password" value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    onBlur={validatePassword} placeholder="********" />
-                {passwordError && <span className='error'>Please enter password</span>}
+                }}
+                onSubmit={(value) => console.log(value)}
+                validateOnBlur
+                validationSchema={validationSchema}>
 
-                <button onClick={loginUser}>Login</button>
+                {({ values, errors, touched, handleChange, handleBlur, isValid, handleSubmit, dirty }) => (
+                    <Form>
+                        <label htmlFor="username">User Name</label>
+                        <Field
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.username}
+                            id="username"
+                            name="username" placeholder="Username"
+                            className={style.input} />
+                        {errors.username && touched.username && <span className='error'>{errors.username}</span>}
 
-                <p className={style.signup_link}>New User? <span onClick={showRegistration}>Signup</span></p>
-            </form>
+
+                        <label htmlFor="password">Password</label>
+                        <Field
+                            onChange={handleChange}
+                            onBlur={handleBlur}
+                            value={values.password}
+                            type="password"
+                            id="password"
+                            name="password" placeholder="*******"
+                            className={style.input} />
+                        {errors.password && touched.password && <span className='error'>{errors.password}</span>}
+
+                        <button disabled={!isValid && !dirty}
+                            onClick={handleSubmit}
+                            type='submit'>Login</button>
+                        <p className={style.signup_link}>New User? <span onClick={showRegistration}>Signup</span></p>
+                    </Form>
+                )}
+            </Formik>
         </div>
     )
 }

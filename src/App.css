@@ -51,6 +51,12 @@ button {
   margin-top: 40px;
 }
 
+button:disabled,
+button[disabled] {
+  background-color: #5a4f7e;
+  color: #b6b2b2;
+}
+
 button:hover {
   background-color: #6a48d8;
 }
