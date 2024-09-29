@@ -36,9 +36,7 @@ export default function Login({ showRegistration }) {
                             id="username"
                             name="username" placeholder="Username"
                             className={style.input} />
-                        {errors.username && touched.username && <span className='error'>{errors.username}</span>}
-
-
+                        <span className='error'><ErrorMessage name="username" /></span>
                         <label htmlFor="password">Password</label>
                         <Field
                             onChange={handleChange}
@@ -48,7 +46,7 @@ export default function Login({ showRegistration }) {
                             id="password"
                             name="password" placeholder="*******"
                             className={style.input} />
-                        {errors.password && touched.password && <span className='error'>{errors.password}</span>}
+                        <span className='error'><ErrorMessage name="password" /></span>
 
                         <button disabled={!isValid && !dirty}
                             onClick={handleSubmit}

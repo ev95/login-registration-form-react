@@ -1,5 +1,5 @@
 import style from './Registration.module.css';
-import { Formik, Field, Form } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
 import * as  Yup from 'yup';
 
 import { useState } from 'react';
@@ -77,7 +77,9 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
             .matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/, 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character(@$!%*?&)'),
         confirmPassword: Yup.string()
             .oneOf([Yup.ref("password")], "Passowords do not match")
-            .required('Please enter confirm password')
+            .required('Please enter confirm password'),
+        dayOfBirth: Yup.number().required('Please select day'),
+        monthOfBirth: Yup.number().required('Please select month'),
     })
     return (
         <div className={style.form_container}>
@@ -87,7 +89,9 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                     username: '',
                     email: '',
                     password: '',
-                    confirmPassword: ''
+                    confirmPassword: '',
+                    dayOfBirth: '',
+                    monthOfBirth: ''
                 }}
                 onSubmit={(val) => console.log(val)}
                 validateOnBlur
@@ -104,7 +108,7 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                                 id="username"
                                 name="username" placeholder="Username"
                                 className={style.input} />
-                            {errors.username && touched.username && <span className='error'>{errors.username}</span>}
+                            <span className='error'><ErrorMessage name="username" /></span>
                         </div>
 
                         <div className={style.input_field}>
@@ -116,7 +120,7 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                                 id="email"
                                 name="email" placeholder="Enter your email"
                                 className={style.input} />
-                            {errors.email && touched.email && <span className='error'>{errors.email}</span>}
+                            <span className='error'><ErrorMessage name="email" /></span>
                         </div>
 
                         <div className={style.input_field}>
@@ -129,7 +133,7 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                                 id="password"
                                 name="password" placeholder="*******"
                                 className={style.input} />
-                            {errors.password && touched.password && <span className='error'>{errors.password}</span>}
+                            <span className='error'><ErrorMessage name="password" /></span>
                         </div>
 
                         <div className={style.input_field}>
@@ -142,16 +146,16 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                                 id="confirmPassword"
                                 name="confirmPassword" placeholder="*******"
                                 className={style.input} />
-                            {errors.confirmPassword && touched.confirmPassword && <span className='error'>{errors.confirmPassword}</span>}
+                            <span className='error'><ErrorMessage name="confirmPassword" /></span>
                         </div>
 
                         <div className={style.input_field}>
                             <label htmlFor="dob">Date of Birth</label>
                             <div className={style.dob_select}>
                                 <div>
-                                    <select value={dayOfBirth}
-                                        onChange={(e) => setDayOfBirth(e.target.value)}
-                                        onBlur={validateDayOfBirth}
+                                    <select value={values.dayOfBirth}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
                                         className={style.input_select} name="day">
                                         <option value="" disabled>Day</option>
                                         {
@@ -160,12 +164,12 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                                             })
                                         }
                                     </select>
-                                    {dayEerror && <span className='error'>Select Day</span>}
+                                    {errors.dayOfBirth && touched.dayOfBirth && <span className='error'>{errors.dayOfBirth}</span>}
                                 </div>
                                 <div>
-                                    <select value={monthOfBirth}
-                                        onChange={(e) => setMonthOfBirth(e.target.value)}
-                                        onBlur={validateMonthOfBirth}
+                                    <select value={values.monthOfBirth}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
                                         className={style.input_select} name="month">
                                         <option value="" disabled>Month</option>
                                         {
@@ -174,7 +178,7 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                                             })
                                         }
                                     </select>
-                                    {monthError && <span className='error'>Select Month</span>}
+                                    {errors.monthOfBirth && touched.monthOfBirth && <span className='error'>{errors.monthOfBirth}</span>}
                                 </div>
                                 <div>
                                     <select value={yearOfBirth}
