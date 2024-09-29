@@ -13,44 +13,44 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
         years.push(<option key={i} value={i}>{i}</option>);
     }
 
-    const [dayOfBirth, setDayOfBirth] = useState('');
-    const [dayEerror, setDayEerror] = useState(false);
+    // const [dayOfBirth, setDayOfBirth] = useState('');
+    // const [dayEerror, setDayEerror] = useState(false);
 
-    const [monthOfBirth, setMonthOfBirth] = useState('');
-    const [monthError, setMonthError] = useState(false);
+    // const [monthOfBirth, setMonthOfBirth] = useState('');
+    // const [monthError, setMonthError] = useState(false);
 
-    const [yearOfBirth, setYearhOfBirth] = useState('');
-    const [yearError, setYearError] = useState(false);
+    // const [yearOfBirth, setYearhOfBirth] = useState('');
+    // const [yearError, setYearError] = useState(false);
 
-    function validateDayOfBirth() {
-        if (dayOfBirth) {
-            setDayEerror(false);
-        } else {
-            setDayEerror(true);
-        }
-    }
+    // function validateDayOfBirth() {
+    //     if (dayOfBirth) {
+    //         setDayEerror(false);
+    //     } else {
+    //         setDayEerror(true);
+    //     }
+    // }
 
-    function validateMonthOfBirth() {
-        if (monthOfBirth) {
-            setMonthError(false);
-        } else {
-            setMonthError(true);
-        }
-    }
+    // function validateMonthOfBirth() {
+    //     if (monthOfBirth) {
+    //         setMonthError(false);
+    //     } else {
+    //         setMonthError(true);
+    //     }
+    // }
 
-    function validateYearOfBirth() {
-        if (yearOfBirth) {
-            setYearError(false);
-        } else {
-            setYearError(true);
-        }
-    }
+    // function validateYearOfBirth() {
+    //     if (yearOfBirth) {
+    //         setYearError(false);
+    //     } else {
+    //         setYearError(true);
+    //     }
+    // }
 
     function validateForm(e) {
         e.preventDefault();
-        validateDayOfBirth();
-        validateMonthOfBirth();
-        validateYearOfBirth();
+        // validateDayOfBirth();
+        // validateMonthOfBirth();
+        // validateYearOfBirth();
         if (!usernameError && !emailError && !emaililFormatError && !passwordError && !confirmPasswordError && !confirmPasswordMatchError && !dayEerror && !monthError && !yearError) {
             // showLogin(false);
             // setUserInfo({
@@ -78,8 +78,9 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
         confirmPassword: Yup.string()
             .oneOf([Yup.ref("password")], "Passowords do not match")
             .required('Please enter confirm password'),
-        dayOfBirth: Yup.number().required('Please select day'),
-        monthOfBirth: Yup.number().required('Please select month'),
+        dayOfBirth: Yup.string().required('Please select day'),
+        monthOfBirth: Yup.string().required('Please select month'),
+        yearOfBirth: Yup.string().required('Please select year')
     })
     return (
         <div className={style.form_container}>
@@ -91,7 +92,8 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                     password: '',
                     confirmPassword: '',
                     dayOfBirth: '',
-                    monthOfBirth: ''
+                    monthOfBirth: '',
+                    yearOfBirth: ''
                 }}
                 onSubmit={(val) => console.log(val)}
                 validateOnBlur
@@ -153,18 +155,18 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                             <label htmlFor="dob">Date of Birth</label>
                             <div className={style.dob_select}>
                                 <div>
-                                    <select value={values.dayOfBirth}
+                                    <Field as="select" value={values.dayOfBirth}
                                         onChange={handleChange}
                                         onBlur={handleBlur}
                                         className={style.input_select} name="day">
                                         <option value="" disabled>Day</option>
                                         {
                                             [...Array(31).keys()].map((_, index) => {
-                                                return <option key={index} value={index + 1}>{index + 1}</option>
+                                                return <option key={index + 1} value={index + 1}>{index + 1}</option>
                                             })
                                         }
-                                    </select>
-                                    {errors.dayOfBirth && touched.dayOfBirth && <span className='error'>{errors.dayOfBirth}</span>}
+                                    </Field>
+                                    <span className='error'><ErrorMessage name="dayOfBirth" /></span>
                                 </div>
                                 <div>
                                     <select value={values.monthOfBirth}
@@ -178,20 +180,22 @@ export default function Registration({ showLogin, setUserInfo, setShowProfile })
                                             })
                                         }
                                     </select>
-                                    {errors.monthOfBirth && touched.monthOfBirth && <span className='error'>{errors.monthOfBirth}</span>}
+                                    <span className='error'><ErrorMessage name="monthOfBirth" /></span>
                                 </div>
                                 <div>
-                                    <select value={yearOfBirth}
-                                        onChange={(e) => setYearhOfBirth(e.target.value)}
-                                        onBlur={validateYearOfBirth}
+                                    <Field as="select" value={values.yearOfBirth}
+                                        onChange={handleChange}
+                                        onBlur={handleBlur}
                                         className={style.input_select} name="year" required>
                                         <option value="" disabled>Year</option>
                                         {years}
-                                    </select>
-                                    {yearError && <span className='error'>Select Year</span>}
+                                    </Field>
+                                    <span className='error'><ErrorMessage name="yearOfBirth" /></span>
                                 </div>
                             </div>
                         </div>
+
+
                         <button className={style.register_btn}
                             disabled={!isValid && !dirty}
                             onClick={handleSubmit}
